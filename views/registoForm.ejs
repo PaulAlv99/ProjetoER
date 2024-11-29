@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html class="overflow-hidden">
   <head>
-    <link rel="manifest" href="manifest.json" />
-    <title>Sistema de reutilização - Registro</title>
+    <title>Pereiro - Registo </title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       href="https://cdn.jsdelivr.net/npm/daisyui@4.11.1/dist/full.min.css"
       rel="stylesheet"
       type="text/css"
     />
+    
   </head>
-  <body class="h-screen bg-blue-200">
-    <div class="flex items-center justify-center min-h-screen">
+  <body class="h-screen overflow-hidden bg-blue-200">
+    <div class="flex items-center justify-center h-screen">
       <div class="w-full max-w-md p-4">
         <% if (locals.error) { %>
         <div
@@ -23,20 +23,17 @@
         <% } %>
 
         <form
-          action="/register"
+          action="/registo"
           method="POST"
-          class="bg-white shadow-md rounded px-6 pt-4 pb-6"
+          enctype="multipart/form-data"
+          class="bg-white shadow-md rounded px-6 pt-4 pb-6 max-h-[calc(100vh-2rem)] overflow-y-auto"
         >
-          <img
-            src="/logotipoER.png"
-            alt="Logo"
-            class="mx-auto h-14 w-auto mb-3"
-          />
-          <h2 class="text-lg font-bold mb-4 text-center text-gray-800">
+        <img src="/logotipoER.png" alt="Logo" class="mx-auto h-20 w-auto" />
+          <h2 class="text-lg font-bold mb-3 text-center text-gray-800">
             Registro
           </h2>
 
-          <div class="mb-3">
+          <div class="mb-2">
             <label
               class="block text-gray-700 text-sm font-bold mb-1"
               for="pseudonimo"
@@ -53,7 +50,7 @@
             />
           </div>
 
-          <div class="mb-3">
+          <div class="mb-2">
             <label class="block text-gray-700 text-sm font-bold mb-1" for="age">
               Idade
             </label>
@@ -67,11 +64,11 @@
               required
             />
             <p class="text-gray-600 text-xs italic mt-1">
-              Você precisa ter mais de 18 anos
+              Você precisa ter mais do que 18 anos
             </p>
           </div>
 
-          <div class="mb-3">
+          <div class="mb-2">
             <label
               class="block text-gray-700 text-sm font-bold mb-1"
               for="idDocument"
@@ -91,7 +88,7 @@
             </p>
           </div>
 
-          <div class="mb-4">
+          <div class="mb-3">
             <label
               class="block text-gray-700 text-sm font-bold mb-1"
               for="publicKey"
@@ -109,9 +106,17 @@
             <p class="text-gray-600 text-xs italic mt-1">
               Faça upload da sua chave pública
             </p>
+            <div class="text-center mt-3">
+              <a
+                href="/gerarchaves"
+                class="text-blue-500 hover:text-blue-700 text-sm font-semibold underline"
+              >
+                Gerar conjunto de chaves
+              </a>
+            </div>
           </div>
 
-          <div class="flex flex-col gap-3">
+          <div class="flex flex-col gap-2">
             <button
               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
               type="submit"
