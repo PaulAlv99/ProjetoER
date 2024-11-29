@@ -1,46 +1,93 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <link rel="manifest" href="manifest.json" />
-  <title>Sistema de reutilização</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link
-    href="https://cdn.jsdelivr.net/npm/daisyui@4.11.1/dist/full.min.css"
-    rel="stylesheet"
-    type="text/css"
-  />
-  <link rel="icon" href="./content/images/smile.png" type="image/x-icon" />
-</head>
-<body class="h-screen bg-green-200">
-  <div class="grid place-items-center h-full">
-    <div class="w-full max-w-xs">
-      <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <div class="mb-4">
-          <label class="block text-gray-700 text-sm font-bold mb-2" for="pseudonimo">
-            Pseudónimo
-          </label>
-          <input
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="pseudonimo" type="text" placeholder="Pseudónimo" />
+  <head>
+    <link rel="manifest" href="manifest.json" />
+    <title>Sistema de reutilização - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.11.1/dist/full.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+  </head>
+  <body class="h-screen bg-blue-200">
+    <div class="grid place-items-center h-full">
+      <div class="w-full max-w-md">
+        <div class="text-center mb-8"></div>
+
+        <% if (locals.error) { %>
+        <div
+          class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+          role="alert"
+        >
+          <span class="block sm:inline"><%= error %></span>
         </div>
-        <div class="mb-6">
-          <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
-            Chave privada
-          </label>
+        <% } %>
+
+        <form
+          action="/login"
+          method="POST"
+          class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        >
+          <img src="/logotipoER.png" alt="Logo" class="mx-auto h-20 w-auto" />
+          <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">
+            Login
+          </h2>
+
+          <div class="mb-4">
+            <label
+              class="block text-gray-700 text-sm font-bold mb-2"
+              for="pseudonimo"
+            >
+              Pseudónimo
+            </label>
             <input
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="privateKey" type="file" accept=".pem" />
-            <p class="text-gray-600 text-xs italic">Faça upload da sua chave privada</p>
-        </div>
-        <div class="flex items-center justify-between">
-          <button
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="button">
-            Sign In
-          </button>
-        </div>
-      </form>
+              class="dark:bg-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="pseudonimo"
+              name="pseudonimo"
+              type="text"
+              placeholder="Seu pseudónimo"
+              required
+            />
+          </div>
+
+          <div class="mb-6">
+            <label
+              class="block text-gray-700 text-sm font-bold mb-2"
+              for="privateKey"
+            >
+              Chave Privada
+            </label>
+            <input
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="privateKey"
+              name="privateKey"
+              type="file"
+              accept=".pem"
+              required
+            />
+            <p class="text-gray-600 text-xs italic mt-1">
+              Faça upload da sua chave privada (.pem)
+            </p>
+          </div>
+
+          <div class="flex flex-col gap-4">
+            <button
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+              type="submit"
+            >
+              Entrar
+            </button>
+
+            <a
+              href="/registo"
+              class="text-center text-sm text-gray-600 hover:text-gray-800"
+            >
+              Não tem uma conta? Registre-se
+            </a>
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
-</body>
+  </body>
 </html>
