@@ -24,7 +24,7 @@
         <% } %>
 
         <form
-          action="/login"
+          action="/login-entidade"
           method="POST"
           enctype="multipart/form-data"
           class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
@@ -34,51 +34,37 @@
             Pereiro
           </h2>
           <h2 class="text-1xl font-bold mb-6 text-center text-gray-800">
-            Login
+            Login de Entidade
           </h2>
 
           <div class="mb-4">
             <label
               class="block text-gray-700 text-sm font-bold mb-2"
-              for="pseudonimo"
+              for="nomeEntidade"
             >
-              Pseudónimo
+              Nome
             </label>
             <input
               class="dark:bg-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="pseudonimo"
-              name="pseudonimo"
+              id="nomeEntidade"
+              name="nomeEntidade"
               type="text"
-              placeholder="Seu pseudónimo"
+              placeholder="Nome da entidade"
               required
             />
           </div>
 
           <div class="mb-6">
-            <label
-              class="block text-gray-700 text-sm font-bold mb-2"
-              for="privateKey"
-            >
-              Chave Privada
+            <label class="text-gray-700 text-sm font-bold mb-2" for="password">
+              Password
             </label>
             <input
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="privateKey"
-              name="privateKey"
-              type="file"
-              accept=".pem"
+              class="dark:bg-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="password"
+              name="password"
+              type="password"
               required
             />
-            <p class="text-gray-600 text-xs italic mt-1">
-              Faça upload da sua chave privada
-            </p>
-          </div>
-          <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2">
-              <input type="checkbox" name="acceptCookies" required />
-              Ao entrar na nossa página concorda com os cookies que serão usados
-              apenas para manter a sessão
-            </label>
           </div>
 
           <div class="flex flex-col gap-4">
@@ -90,7 +76,7 @@
             </button>
 
             <a
-              href="/registo"
+              href="/registo-entidade"
               class="text-center text-sm text-gray-600 hover:text-gray-800"
             >
               Não tem uma conta? Faça já o seu registo
