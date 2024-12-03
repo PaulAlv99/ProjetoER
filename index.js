@@ -5,13 +5,16 @@ const path = require("path");
 const crypto = require("crypto");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
-const { registo, login, sair, autenticarToken } = require("./controllers/auth");
 const {
-  gerarChaves,
-  gerarChavesHandler,
-} = require("./controllers/gerarChaves");
+  registo,
+  login,
+  sair,
+  autenticarToken,
+  registoEntidade,
+  loginEntidade,
+} = require("./controllers/auth");
+const { gerarChavesHandler } = require("./controllers/gerarChaves");
 const cors = require("cors");
-const { buscarIdUtilizador } = require("./controllers/buscaId");
 
 const app = express();
 const port = 3000;
@@ -59,17 +62,23 @@ app.get("/login", (req, res) => {
   res.render("loginForm");
 });
 
-app.get("/perfil", (req, res) => {
-  res.render("perfilUtilizador");
+app.get("/login-entidade", (req, res) => {
+  res.render("loginEntidadeForm");
+});
+
+app.get("/registo-entidade", (req, res) => {
+  res.render("registoEntidadeForm");
 });
 
 // Auth rotas
 // API endpoint to generate keys
 app.post("/gerarchaves", gerarChavesHandler);
-app.post("/perfil/transacoes", buscarIdUtilizador);
 app.post("/registo", registo);
 app.post("/login", login);
 app.get("/sair", sair);
+app.post("/registo-entidade", registoEntidade);
+app.post("/login-entidade", loginEntidade);
+app.post("/perfil/transacoes", buscarIdUtilizador);
 
 const httpsServer = https.createServer(
   {
@@ -82,7 +91,6 @@ const httpsServer = https.createServer(
   },
   app
 );
-
 httpsServer.listen(3000, "127.0.0.1", () => {
   console.log("HTTPS server up and running on port 3000");
 });

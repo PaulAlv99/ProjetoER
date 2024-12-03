@@ -24,9 +24,7 @@ const autenticarToken = (req, res, next) => {
   });
 };
 
-// Login controller
-const login = async (req, res) => {
-  req.cookies._id = idUtilizador;
+const loginUser = async (req, res) => {
   try {
     upload.fields([{ name: "privateKey", maxCount: 1 }])(
       req,
@@ -106,8 +104,7 @@ const login = async (req, res) => {
   }
 };
 
-// Registration stays the same but add return statements
-const registo = async (req, res) => {
+const registoUser = async (req, res) => {
   try {
     upload.fields([
       { name: "idDocument", maxCount: 1 },
@@ -195,9 +192,13 @@ const sair = (req, res) => {
   return res.redirect("/login");
 };
 
+const loginEntidade = async (req, res) => {};
+const registoEntidade = async (req, res) => {};
 module.exports = {
-  registo,
-  login,
+  registo: registoUser,
+  login: loginUser,
   sair,
   autenticarToken,
+  registoEntidade,
+  loginEntidade,
 };
