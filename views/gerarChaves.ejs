@@ -1,72 +1,81 @@
 <!-- views/generateKeys.ejs -->
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Peterio - Gerar chaves</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.11.1/dist/full.min.css" rel="stylesheet" type="text/css" />
-</head>
-<body class="min-h-screen bg-blue-200 py-12 px-4">
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.11.1/dist/full.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+  </head>
+  <body class="min-h-screen bg-blue-200 py-12 px-4">
     <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden">
-        <a href="/registo" class="ml-5 mt-5 block text-blue-500 hover:text-blue-700 font-bold">Voltar</a>
-        <img src="/logotipoER.png" alt="Logo" class="mx-auto h-20 w-auto" />
-        <div class="p-8">
-            <h1 class="text-2xl font-bold text-center mb-8">Gerar chaves</h1>
-            
-            <button
-                onclick="gerarChavesPedido()"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
-            >
-                Gerar conjunto de chaves
-            </button>
+      <a
+        href="/registo"
+        class="ml-5 mt-5 block text-blue-500 hover:text-blue-700 font-bold"
+        >Voltar</a
+      >
+      <img src="/logotipoER.png" alt="Logo" class="mx-auto h-20 w-auto" />
+      <div class="p-8">
+        <h1 class="text-2xl font-bold text-center mb-8">Gerar chaves</h1>
 
-            <div id="result" class="mt-6 hidden">
-                <div class="p-4 bg-green-100 rounded-lg">
-                    <p class="strong text-green-700 font-extrabold">Chaves geradas!</p>
-                    <p class="text-sm text-green-600 mt-2">O download das chaves é automático</p>
-                    <p class="text-sm text-red-600 mt-2 font-extrabold">IMPORTANT: Nunca partilhe a sua chave privada</p>
-                </div>
-            </div>
+        <button
+          onclick="gerarChavesPedido()"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+        >
+          Gerar conjunto de chaves
+        </button>
+
+        <div id="result" class="mt-6 hidden">
+          <div class="p-4 bg-green-100 rounded-lg">
+            <p class="strong text-green-700 font-extrabold">Chaves geradas!</p>
+            <p class="text-sm text-green-600 mt-2">
+              O download das chaves é automático
+            </p>
+            <p class="text-sm text-red-600 mt-2 font-extrabold">
+              IMPORTANT: Nunca partilhe a sua chave privada
+            </p>
+          </div>
         </div>
+      </div>
     </div>
 
     <script>
-        async function gerarChavesPedido() {
+      async function gerarChavesPedido() {
+        try {
+          const response = await fetch("/gerarchaves", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(),
+          });
 
-            try {
-                const response = await fetch('/gerarchaves', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify()
-                });
+          const { privateKey, publicKey } = await response.json();
 
-                const { privateKey, publicKey } = await response.json();
+          downloadKey(privateKey, `private.pem`);
 
-                
-                downloadKey(privateKey, `private.pem`);
-                
-                downloadKey(publicKey, `public.pem`);
+          downloadKey(publicKey, `public.pem`);
 
-                // Mensagem de sucesso
-                document.getElementById('result').classList.remove('hidden');
-
-            } catch (error) {
-                alert('Erro ao gerar as chaves');
-                console.error('Error:', error);
-            }
+          // Mensagem de sucesso
+          document.getElementById("result").classList.remove("hidden");
+        } catch (error) {
+          alert("Erro ao gerar as chaves");
+          console.error("Error:", error);
         }
+      }
 
-        function downloadKey(key, filename) {
-            const blob = new Blob([key], { type: 'text/plain' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            a.click();
-            window.URL.revokeObjectURL(url);
-        }
+      function downloadKey(key, filename) {
+        const blob = new Blob([key], { type: "text/plain" });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        a.click();
+        window.URL.revokeObjectURL(url);
+      }
     </script>
-</body>
+  </body>
 </html>
