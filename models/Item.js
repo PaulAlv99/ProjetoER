@@ -1,8 +1,15 @@
 // models/Utilizador.js
 const mongoose = require("mongoose");
+const { Number } = require("mongoose/lib/schema/index");
 // <!-- Identificacao identidade externa,nome entidade,especializacao,descrição entidade,password -->
 
 const itemSchema = new mongoose.Schema({
+  idUtilizador: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+
   categoria: {
     type: String,
     required: true,
@@ -13,7 +20,7 @@ const itemSchema = new mongoose.Schema({
     required: true,
   },
   peso: {
-    type: Float64Array,
+    type: Number,
     required: true,
   },
   localizacao: {

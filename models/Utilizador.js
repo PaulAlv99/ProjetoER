@@ -35,6 +35,7 @@ const utilizadorSchema = new mongoose.Schema({
     enum: ["ativo", "inativo", "suspenso"],
     default: "ativo",
   },
+  itens: [{ type: mongoose.Schema.Types.ObjectId, ref: "Item" }],
 });
 
 const Utilizador = mongoose.model("Utilizador", utilizadorSchema);
