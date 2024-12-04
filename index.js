@@ -6,8 +6,8 @@ const crypto = require("crypto");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const {
-  registo,
-  login,
+  registoUser,
+  loginUser,
   sair,
   autenticarToken,
   registoEntidade,
@@ -24,7 +24,7 @@ const port = 3000;
 // Connect to MongoDB
 mongoose
   .connect(
-    "mongodb+srv://admin:vFp5rkxFODUGGGH7@cluster0.nka2m.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+    "mongodb+srv://admin:vFp5rkxFODUGGGH7@cluster0.nka2m.mongodb.net/ProjetoER?retryWrites=true&w=majority&appName=Cluster0",
     {}
   )
   .then(() => {
@@ -103,8 +103,8 @@ app.get("/perfil/reviews", (req, res) => {
 // Auth rotas
 // API endpoint to generate keys
 app.post("/gerarchaves", gerarChavesHandler);
-app.post("/registo", registo);
-app.post("/login", login);
+app.post("/registo", registoUser);
+app.post("/login", loginUser);
 app.get("/sair", sair);
 app.post("/registo-entidade", registoEntidade);
 app.post("/login-entidade", loginEntidade);

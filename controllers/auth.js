@@ -70,11 +70,9 @@ const loginUser = async (req, res) => {
             }
 
             // Generate JWT token
-            const token = jwt.sign(
-              { userId: user._id },
-              secretKey, // Use the same secret key
-              { expiresIn: "24h" }
-            );
+            const token = jwt.sign({ userId: user._id }, secretKey, {
+              expiresIn: "24h",
+            });
 
             // Set token in cookie
             res.cookie("token", token, {
@@ -107,7 +105,7 @@ const loginUser = async (req, res) => {
 const registoUser = async (req, res) => {
   try {
     upload.fields([
-      { name: "idDocument", maxCount: 1 },
+      { name: "docIdentificacao", maxCount: 1 },
       { name: "publicKey", maxCount: 1 },
     ])(req, res, async (err) => {
       if (err) {
@@ -117,14 +115,14 @@ const registoUser = async (req, res) => {
       try {
         const { pseudonimo, age } = req.body;
 
-        if (!req.files || !req.files.idDocument || !req.files.publicKey) {
+        if (!req.files || !req.files.docIdentificacao || !req.files.publicKey) {
           return res.render("registoForm", {
             error: "Por favor faça upload de ambos os ficheiros",
           });
         }
 
         const publicKeyContent = req.files.publicKey[0].buffer.toString("utf8");
-        const idImageBuffer = req.files.idDocument[0].buffer;
+        const idImageBuffer = req.files.docIdentificacao[0].buffer;
         const idImageHash = crypto
           .createHash("sha256")
           .update(idImageBuffer)
@@ -145,7 +143,7 @@ const registoUser = async (req, res) => {
         }
 
         const existingId = await User.findOne({
-          "idDocument.hash": idImageHash,
+          "docIdentificacao.hash": idImageHash,
         });
         if (existingId) {
           return res.render("registoForm", {
@@ -162,9 +160,9 @@ const registoUser = async (req, res) => {
         const user = new User({
           pseudonimo,
           age,
-          idDocument: {
+          docIdentificacao: {
             data: idImageBuffer,
-            contentType: req.files.idDocument[0].mimetype,
+            contentType: req.files.docIdentificacao[0].mimetype,
             hash: idImageHash,
           },
           publicKey: publicKeyContent,
@@ -195,8 +193,8 @@ const sair = (req, res) => {
 const loginEntidade = async (req, res) => {};
 const registoEntidade = async (req, res) => {};
 module.exports = {
-  registo: registoUser,
-  login: loginUser,
+  registoUser,
+  loginUser,
   sair,
   autenticarToken,
   registoEntidade,
