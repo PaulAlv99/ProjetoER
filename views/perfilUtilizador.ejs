@@ -11,7 +11,7 @@
     <link rel="manifest" href="manifest.json" />
   </head>
   <body class="min-h-screen bg-gradient-to-b from-blue-100 to-blue-200">
-    <div class="navbar bg-base-100">
+    <div class="dark: bg-white text-black navbar bg-base-100">
       <div class="flex-1">
         <img src="/logotipoER.png" alt="Logo" class="h-10 w-auto mr-2" />
         <a href="/" class="btn btn-ghost text-xl"
@@ -37,11 +37,11 @@
           </button>
           <ul
             tabindex="0"
-            class="dropdown-content menu menu-sm z-[1] mt-3 w-52 bg-base-100 p-2 shadow rounded-box"
+            class="dark: bg-white text-black dropdown-content menu menu-sm z-[1] mt-3 w-52 bg-base-100 p-2 shadow rounded-box"
           >
             <li><a href="/perfil">Perfil</a></li>
             <li><a href="/pesquisa">Pesquisa</a></li>
-            <li><a>Exemplo 3</a></li>
+            <li><a href="/sair">Sair</a></li>
           </ul>
         </div>
       </div>
@@ -62,7 +62,9 @@
         <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">
           O que pretende visualizar
         </h2>
-        <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div
+          class="dark: bg-white text-black grid md:grid-cols-2 gap-8 max-w-5xl mx-auto"
+        >
           <a href="/perfil/transacoes">
             <div class="text-center p-6 rounded-lg shadow-md bg-white">
               <div

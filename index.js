@@ -47,11 +47,40 @@ app.use(
   })
 );
 
-// Public routes
+//
 app.get("/", autenticarToken, (req, res) => {
   res.render("paginaInicial");
 });
 
+app.get("/pesquisa", autenticarToken, (req, res) => {
+  res.render("pesquisaForm");
+});
+
+app.get("/anuncio", autenticarToken, (req, res) => {
+  res.render("anuncioItensForm");
+});
+
+app.get("/perfil", autenticarToken, (req, res) => {
+  res.render("perfilUtilizador");
+});
+
+app.get("/perfil/transacoes", autenticarToken, (req, res) => {
+  res.render("perfilTransacoes");
+});
+
+app.get("/perfil/itens", autenticarToken, (req, res) => {
+  res.render("perfilItens");
+});
+
+app.get("/perfil/notificacoes", autenticarToken, (req, res) => {
+  res.render("perfilNotificacoes");
+});
+
+app.get("/perfil/reviews", autenticarToken, (req, res) => {
+  res.render("perfilReviews");
+});
+
+// Public routes
 app.get("/gerarchaves", (req, res) => {
   res.render("gerarChaves");
 });
@@ -72,36 +101,7 @@ app.get("/registo-entidade", (req, res) => {
   res.render("registoEntidadeForm");
 });
 
-app.get("/pesquisa", (req, res) => {
-  res.render("pesquisaForm");
-});
-
-app.get("/anuncio", (req, res) => {
-  res.render("anuncioItensForm");
-});
-
-app.get("/perfil", (req, res) => {
-  res.render("perfilUtilizador");
-});
-
-app.get("/perfil/transacoes", (req, res) => {
-  res.render("perfilTransacoes");
-});
-
-app.get("/perfil/itens", (req, res) => {
-  res.render("perfilItens");
-});
-
-app.get("/perfil/notificacoes", (req, res) => {
-  res.render("perfilNotificacoes");
-});
-
-app.get("/perfil/reviews", (req, res) => {
-  res.render("perfilReviews");
-});
-
 // Auth rotas
-// API endpoint to generate keys
 app.post("/gerarchaves", gerarChavesHandler);
 app.post("/registo", registoUser);
 app.post("/login", loginUser);
