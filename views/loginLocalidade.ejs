@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pereiro - Login Localidade</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.11.1/dist/full.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+  </head>
+  <body class="h-screen bg-blue-200">
+    <div class="grid place-items-center h-full">
+      <div class="w-full max-w-md">
+        <div class="text-center mb-8"></div>
+
+        <% if (locals.error) { %>
+        <div
+          class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+          role="alert"
+        >
+          <span class="block sm:inline"><%= error %></span>
+        </div>
+        <% } %> <% if (locals.success) { %>
+        <div
+          class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+          role="alert"
+        >
+          <span class="block sm:inline"><%= success %></span>
+        </div>
+        <% } %>
+
+        <form
+          action="/login-localidade"
+          method="POST"
+          class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        >
+          <img src="/logotipoER.png" alt="Logo" class="mx-auto h-20 w-auto" />
+          <h2 class="text-2xl font-bold mb-2 text-center text-gray-800">
+            Pereiro
+          </h2>
+          <h2 class="text-1xl font-bold mb-6 text-center text-gray-800">
+            Login de Localidade
+          </h2>
+
+          <div class="mb-4">
+            <label
+              class="block text-gray-700 text-sm font-bold mb-2"
+              for="nomeLocalidade"
+            >
+              Nome da Localidade
+            </label>
+            <input
+              class="dark:bg-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="nomeLocalidade"
+              name="nomeLocalidade"
+              type="text"
+              placeholder="Nome da localidade"
+              required
+            />
+          </div>
+
+          <div class="mb-6">
+            <label class="text-gray-700 text-sm font-bold mb-2" for="password">
+              Password
+            </label>
+            <input
+              class="dark:bg-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="password"
+              name="password"
+              type="password"
+              required
+            />
+          </div>
+
+          <div class="flex flex-col gap-4">
+            <button
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+              type="submit"
+            >
+              Entrar
+            </button>
+
+            <a
+              href="/registo-localidade"
+              class="text-center text-sm text-gray-600 hover:text-gray-800"
+            >
+              Não tem uma conta? Faça já o seu registo
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

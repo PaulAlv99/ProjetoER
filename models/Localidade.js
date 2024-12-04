@@ -1,4 +1,3 @@
-// models/Utilizador.js
 const mongoose = require("mongoose");
 
 const localidadeSchema = new mongoose.Schema({
@@ -22,16 +21,20 @@ const localidadeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  estado: {
-    type: String,
-    enum: ["ativo", "expulso", "suspenso"],
-    default: "suspenso",
-  },
   password: {
     type: String,
     required: true,
   },
+  estado: {
+    type: String,
+    enum: ["pendente", "aprovado", "rejeitado", "banido", "suspenso"],
+    default: "pendente",
+  },
+  dataCriacao: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-const Localidade = mongoose.model("Utilizador", localidadeSchema);
+const Localidade = mongoose.model("Localidade", localidadeSchema);
 module.exports = Localidade;

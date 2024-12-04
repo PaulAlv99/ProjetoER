@@ -29,8 +29,12 @@ const entidadeSchema = new mongoose.Schema({
   },
   estado: {
     type: String,
-    enum: ["ativo", "expulso", "suspenso"],
-    default: "suspenso",
+    enum: ["pendente", "aprovado", "rejeitado", "banido"],
+    default: "pendente",
+  },
+  dataCriacao: {
+    type: Date,
+    default: Date.now,
   },
 });
 

@@ -10,8 +10,12 @@ const {
   loginUser,
   sair,
   autenticarToken,
+  autenticarTokenEntidade,
+  autenticarTokenLocalidade,
   registoEntidade,
   loginEntidade,
+  registoLocalidade,
+  loginLocalidade,
 } = require("./controllers/auth");
 const { gerarChavesHandler } = require("./controllers/gerarChaves");
 const { informacaoTransacaoUtilizador } = require("./controllers/buscaId");
@@ -94,11 +98,26 @@ app.get("/login", (req, res) => {
 });
 
 app.get("/login-entidade", (req, res) => {
-  res.render("loginEntidadeForm");
+  res.render("loginEntidade");
 });
 
 app.get("/registo-entidade", (req, res) => {
-  res.render("registoEntidadeForm");
+  res.render("registoEntidade");
+});
+
+app.get("/entidade/dashboard", autenticarTokenEntidade, (req, res) => {
+  res.render("dashboardEntidade");
+});
+
+app.get("/localidade/dashboard", autenticarTokenLocalidade, (req, res) => {
+  res.render("dashboardLocalidade");
+});
+app.get("/registo-localidade", (req, res) => {
+  res.render("registoLocalidade");
+});
+
+app.get("/login-localidade", (req, res) => {
+  res.render("loginLocalidade");
 });
 
 // Auth rotas
@@ -108,6 +127,8 @@ app.post("/login", loginUser);
 app.get("/sair", sair);
 app.post("/registo-entidade", registoEntidade);
 app.post("/login-entidade", loginEntidade);
+app.post("/registo-localidade", registoLocalidade);
+app.post("/login-localidade", loginLocalidade);
 app.post("/perfil/transacoes", informacaoTransacaoUtilizador);
 app.post("/perfil/transacoes", informacaoTransacaoUtilizador);
 
