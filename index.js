@@ -24,7 +24,7 @@ const port = 3000;
 // Connect to MongoDB
 mongoose
   .connect(
-    "mongodb+srv://admin:vFp5rkxFODUGGGH7@cluster0.nka2m.mongodb.net/ProjetoER?retryWrites=true&w=majority&appName=Cluster0",
+    "mongodb+srv://admin:n2ubVfjcPyyhyFxd@cluster0.pd2lc.mongodb.net/ProjetoER?retryWrites=true&w=majority&appName=Cluster0",
     {}
   )
   .then(() => {
