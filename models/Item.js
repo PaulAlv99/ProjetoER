@@ -7,9 +7,7 @@ const itemSchema = new mongoose.Schema({
   idUtilizador: {
     type: String,
     required: true,
-    unique: true,
   },
-
   categoria: {
     type: String,
     required: true,
