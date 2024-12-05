@@ -34,7 +34,11 @@ const anunciarItem = async (req, res) => {
               contentType: contentType,
             };
           });
-
+          if (fotos.length < 5 || fotos.length >= 10) {
+            return res.render("anuncioItensForm", {
+              error: "Por favor faça upload de no minimo 5 fotos",
+            });
+          }
           let provisoriafotos = []; // Buffer onde iremos guardar as fotos
           let i = 0;
           while (i < req.files.fotos.length) {
