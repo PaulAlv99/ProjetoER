@@ -119,6 +119,9 @@ app.get("/registo-localidade", (req, res) => {
 app.get("/login-localidade", (req, res) => {
   res.render("loginLocalidade");
 });
+app.get("/admin/dashboard", (req, res) => {
+  res.render("dashboardAdmin");
+});
 
 // Auth rotas
 app.post("/gerarchaves", gerarChavesHandler);

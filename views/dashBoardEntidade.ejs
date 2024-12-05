@@ -1,23 +1,207 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pereiro - Dashboard Entidade</title>
-    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.11.1/dist/full.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link rel="manifest" href="manifest.json" />
   </head>
-  <body>
-    <header>
-      <h1>A</h1>
-    </header>
-    <main>
-      <section id="reports">
-        <h2>Relatórios</h2>
-      </section>
-    </main>
-    <footer>
-      <p>&copy; Pereiro - Plataforma de reutilização</p>
-      <p>Todos os direitos reservados.</p>
+  <body class="min-h-screen bg-gradient-to-b from-blue-100 to-blue-200">
+    <!-- Navbar -->
+    <div class="dark:bg-white text-black navbar bg-base-100">
+      <div class="flex-1">
+        <img src="/logotipoER.png" alt="Logo" class="h-10 w-auto mr-2" />
+        <a href="/" class="btn btn-ghost text-xl"
+          >Pereiro - Plataforma de reutilização</a
+        >
+      </div>
+      <div class="flex-none">
+        <div class="dropdown dropdown-end">
+          <button tabindex="0" class="btn btn-square btn-ghost">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              class="inline-block h-5 w-5 stroke-current"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
+              ></path>
+            </svg>
+          </button>
+          <ul
+            tabindex="0"
+            class="dark:bg-white text-black dropdown-content menu menu-sm z-[1] mt-3 w-52 bg-base-100 p-2 shadow rounded-box"
+          >
+            <li><a href="/sair">Sair</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+      <h1 class="text-3xl font-bold text-center text-gray-900 mb-8">
+        Dashboard Entidade
+      </h1>
+
+      <!-- Stats Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <!-- Relatórios Solicitados -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-gray-600">Relatórios Solicitados</p>
+              <p class="text-2xl font-semibold text-gray-900">45</p>
+            </div>
+            <svg
+              class="h-8 w-8 text-blue-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Utilizadores Ativos -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-gray-600">Utilizadores Ativos</p>
+              <p class="text-2xl font-semibold text-gray-900">2.7k</p>
+            </div>
+            <svg
+              class="h-8 w-8 text-blue-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Impacto Ambiental -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-gray-600">Impacto Ambiental</p>
+              <p class="text-2xl font-semibold text-gray-900">+85%</p>
+            </div>
+            <svg
+              class="h-8 w-8 text-blue-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Alertas -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-gray-600">Alertas</p>
+              <p class="text-2xl font-semibold text-gray-900">3</p>
+            </div>
+            <svg
+              class="h-8 w-8 text-blue-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reports Section -->
+      <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-xl font-semibold mb-4">Relatórios Disponíveis</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Frequência de Transações -->
+          <div
+            class="border rounded-lg p-4 cursor-pointer hover:bg-blue-50 transition-colors"
+          >
+            <h3 class="font-semibold text-lg mb-2">Frequência de Transações</h3>
+            <p class="text-gray-600 text-sm">
+              Análise das frequências de transações ao longo do tempo
+            </p>
+          </div>
+
+          <!-- Preferência Categórica -->
+          <div
+            class="border rounded-lg p-4 cursor-pointer hover:bg-blue-50 transition-colors"
+          >
+            <h3 class="font-semibold text-lg mb-2">Preferência Categórica</h3>
+            <p class="text-gray-600 text-sm">
+              Distribuição de itens por categorias
+            </p>
+          </div>
+
+          <!-- Preferências Locais -->
+          <div
+            class="border rounded-lg p-4 cursor-pointer hover:bg-blue-50 transition-colors"
+          >
+            <h3 class="font-semibold text-lg mb-2">Preferências Locais</h3>
+            <p class="text-gray-600 text-sm">
+              Análise de locais mais utilizados
+            </p>
+          </div>
+
+          <!-- Materiais Reutilizados -->
+          <div
+            class="border rounded-lg p-4 cursor-pointer hover:bg-blue-50 transition-colors"
+          >
+            <h3 class="font-semibold text-lg mb-2">Materiais Reutilizados</h3>
+            <p class="text-gray-600 text-sm">
+              Quantidade e tipos de materiais reutilizados
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white py-8">
+      <div class="container mx-auto px-4">
+        <div class="text-center text-dark">
+          <p>&copy; Pereiro - Plataforma de reutilização</p>
+          <p>Todos os direitos reservados.</p>
+        </div>
+      </div>
     </footer>
   </body>
 </html>
