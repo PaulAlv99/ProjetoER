@@ -15,11 +15,14 @@ const autenticarTokenUser = (req, res, next) => {
     return res.redirect("/login");
   }
 
-  jwt.verify(token, secretKey, (err, user) => {
+  jwt.verify(token, secretKey, async (err, user) => {
+    console.log(user);
+    const { userId, iat, exp } = user;
+    const procurarUser = await User.findById(userId);
     if (err) {
       return res.redirect("/login");
     }
-    if (!user.userId) {
+    if (!procurarUser) {
       return res.redirect("/login");
     }
     next();
@@ -33,11 +36,18 @@ const autenticarTokenEntidade = (req, res, next) => {
     return res.redirect("/login-entidade");
   }
 
-  jwt.verify(token, secretKey, (err, entidade) => {
+  jwt.verify(token, secretKey, async (err, entidade) => {
+    console.log(entidade);
+    const { entidadeId, iat, exp } = entidade;
+    const procurarEntidade = await Entidade.findById(entidadeId);
+    // console.log(procurarEntidade);
     if (err) {
       return res.redirect("/login-entidade");
     }
-    if (!entidade.nomeEntidade) {
+    if (!procurarEntidade) {
+      return res.redirect("/login-entidade");
+    }
+    if (procurarEntidade.estado !== "aprovado") {
       return res.redirect("/login-entidade");
     }
     next();
@@ -51,11 +61,24 @@ const autenticarTokenLocalidade = (req, res, next) => {
     return res.redirect("/login-localidade");
   }
 
-  jwt.verify(token, secretKey, (err, localidade) => {
+  jwt.verify(token, secretKey, async (err, localidade) => {
+    console.log("Localidade:", localidade);
+    const { localidadeId, localidadeTipo, iat, exp } = localidade;
+    //tipo a dar undefined
+    // console.log("Localidade ID:", localidadeId);
+    // console.log("Localidade Tipo:", localidadeTipo);
+    // console.log("iat:", iat);
+    // console.log("exp:", exp);
+    const procurarLocalidade = await Localidade.findById(localidadeId);
+    console.log(procurarLocalidade);
+    // console.log("Localidade encontrada:", procurarLocalidade);
     if (err) {
       return res.redirect("/login-localidade");
     }
-    if (!localidade.nomeLocalidade) {
+    if (!procurarLocalidade) {
+      return res.redirect("/login-localidade");
+    }
+    if (procurarLocalidade.estado !== "aprovado") {
       return res.redirect("/login-localidade");
     }
     next();
@@ -242,8 +265,8 @@ const loginEntidade = async (req, res) => {
         error: "Por favor preencha todos os campos",
       });
     }
-
     const entidade = await Entidade.findOne({ nome: nomeEntidade });
+    console.log(entidade);
     if (!entidade) {
       return res.render("loginEntidade", {
         error: "Credenciais inválidas",
@@ -272,19 +295,32 @@ const loginEntidade = async (req, res) => {
       return res.render("loginEntidade", {
         error: "Pedido de registo foi rejeitado",
       });
+    } else if (entidade.estado === "banido") {
+      return res.render("loginEntidade", {
+        error: "Esta entidade foi banida do sistema",
+      });
     }
+    try {
+      if (entidade.estado === "aprovado") {
+        console.log("Entidade aprovada");
+        const token = jwt.sign({ entidadeId: entidade._id }, secretKey, {
+          expiresIn: "24h",
+        });
 
-    const token = jwt.sign({ entidadeId: entidade._id }, secretKey, {
-      expiresIn: "24h",
-    });
-
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: true,
-      maxAge: 24 * 60 * 60 * 1000,
-    });
-
-    return res.redirect("/entidade/dashboard");
+        res.cookie("token", token, {
+          httpOnly: true,
+          secure: true,
+          maxAge: 24 * 60 * 60 * 1000,
+        });
+        console.log("Token set");
+        return res.redirect("/entidade/dashboard");
+      }
+    } catch (e) {
+      console.log(e);
+      return res.render("loginEntidade", {
+        error: "Erro na criação do token",
+      });
+    }
   } catch (error) {
     console.error("Erro de login da entidade:", error);
     return res.render("loginEntidade", {
@@ -525,28 +561,34 @@ const loginLocalidade = async (req, res) => {
         error: "Esta conta está temporariamente suspensa",
       });
     }
-    console.log("Authentication successful, generating token");
+    try {
+      if (localidade.estado === "aprovado") {
+        console.log("Localidade aprovada");
+        // Generate JWT token
+        const token = jwt.sign(
+          {
+            localidadeId: localidade._id,
+            type: "localidade",
+          },
+          secretKey,
+          { expiresIn: "24h" }
+        );
 
-    // Generate JWT token
-    const token = jwt.sign(
-      {
-        localidadeId: localidade._id,
-        type: "localidade",
-      },
-      secretKey,
-      { expiresIn: "24h" }
-    );
-
-    // Set cookie
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: true,
-      maxAge: 24 * 60 * 60 * 1000,
-    });
-
-    console.log("Token set, redirecting");
-
-    return res.redirect("/localidade/dashboard");
+        // Set cookie
+        res.cookie("token", token, {
+          httpOnly: true,
+          secure: true,
+          maxAge: 24 * 60 * 60 * 1000,
+        });
+      }
+      console.log("Token set");
+      return res.redirect("/localidade/dashboard");
+    } catch (e) {
+      console.error("Erro na criação do token:", e);
+      return res.render("loginLocalidade", {
+        error: "Erro na criação do token",
+      });
+    }
   } catch (error) {
     console.error("Erro de login da localidade:", error);
     return res.render("loginLocalidade", {
