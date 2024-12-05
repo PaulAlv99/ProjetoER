@@ -166,6 +166,8 @@ const loginUser = async (req, res) => {
 
 const registoUser = async (req, res) => {
   try {
+    console.log(req.body);
+
     upload.fields([
       { name: "docIdentificacao", maxCount: 1 },
       { name: "publicKey", maxCount: 1 },

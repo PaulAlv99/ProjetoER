@@ -11,7 +11,10 @@ const itemSchema = new mongoose.Schema({
   categoria: {
     type: String,
     required: true,
-    unique: true,
+  },
+  nome: {
+    type: String,
+    required: true,
   },
   descricao: {
     type: String,

@@ -19,6 +19,7 @@ const {
 } = require("./controllers/auth");
 const { gerarChavesHandler } = require("./controllers/gerarChaves");
 const { informacaoTransacaoUtilizador } = require("./controllers/buscaId");
+const { anunciarItem } = require("./controllers/anuncio");
 
 const cors = require("cors");
 
@@ -128,6 +129,7 @@ app.post("/gerarchaves", gerarChavesHandler);
 app.post("/registo", registoUser);
 app.post("/login", loginUser);
 app.get("/sair", sair);
+app.post("/anuncio", anunciarItem);
 app.post("/registo-entidade", registoEntidade);
 app.post("/login-entidade", loginEntidade);
 app.post("/registo-localidade", registoLocalidade);
@@ -146,7 +148,7 @@ const httpsServer = https.createServer(
   },
   app
 );
-httpsServer.listen(3000, "127.0.0.1", () => {
+httpsServer.listen(3000, () => {
   console.log("HTTPS server up and running on port 3000");
 });
 // app.listen(port,"192.168.1.14",() => {
