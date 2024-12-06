@@ -22,6 +22,7 @@ const { informacaoTransacaoUtilizador } = require("./controllers/buscaId");
 const { anunciarItem } = require("./controllers/anuncio");
 
 const cors = require("cors");
+const { pesquisarItens } = require("./controllers/pesquisa");
 
 const app = express();
 const port = 3000;
@@ -63,6 +64,14 @@ app.get("/pesquisa", autenticarToken, (req, res) => {
 
 app.get("/anuncio", autenticarToken, (req, res) => {
   res.render("anuncioItensForm");
+});
+
+app.get("/resultadosPesquisa", autenticarToken, (req, res) => {
+  res.render("resultadosPesquisa");
+});
+
+app.get("/pesquisa", autenticarToken, (req, res) => {
+  res.render("pesquisaForm");
 });
 
 app.get("/perfil", autenticarToken, (req, res) => {
@@ -130,6 +139,7 @@ app.post("/registo", registoUser);
 app.post("/login", loginUser);
 app.get("/sair", sair);
 app.post("/anuncio", anunciarItem);
+app.post("/pesquisa", pesquisarItens);
 app.post("/registo-entidade", registoEntidade);
 app.post("/login-entidade", loginEntidade);
 app.post("/registo-localidade", registoLocalidade);
