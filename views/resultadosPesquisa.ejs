@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <title>Pesquisar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.11.1/dist/full.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link rel="manifest" href="manifest.json" />
+  </head>
+  <body class="min-h-screen bg-gradient-to-b from-blue-100 to-blue-200">
+    <div class="navbar bg-base-100">
+      <div class="flex-1">
+        <img src="/logotipoER.png" alt="Logo" class="h-10 w-auto mr-2" />
+        <a href="/" class="btn btn-ghost text-xl"
+          >Pereiro - Plataforma de reutilização</a
+        >
+      </div>
+      <div class="flex-none">
+        <div class="dropdown dropdown-end">
+          <button tabindex="0" class="btn btn-square btn-ghost">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              class="inline-block h-5 w-5 stroke-current"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
+              ></path>
+            </svg>
+          </button>
+          <ul
+            tabindex="0"
+            class="dropdown-content menu menu-sm z-[1] mt-3 w-52 bg-base-100 p-2 shadow rounded-box"
+          >
+            <li><a href="/perfil">Perfil</a></li>
+            <li><a>Exemplo 2</a></li>
+            <li><a>Exemplo 3</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="container mx-auto px-4 py-16">
+      <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          Resultados
+        </h1>
+      </div>
+    </div>
+    <!-- Mensagem de erro, se houver -->
+    <% if (locals.error) { %>
+    <div
+      class="mb-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+      role="alert"
+    >
+      <span class="block sm:inline"><%= error %></span>
+    </div>
+    <% } %>
+
+    <!-- Lista de Resultados -->
+    <section id="pesquisaItens" class="py-8 bg-white dark:text-black">
+      <p class="mt-1 mx-6 text-sm/6 text-gray-600">
+        Aqui estão os resultados da pesquisa que realizou.
+      </p>
+      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mx-3">
+        <% resultados.forEach((item) => { %>
+        <li
+          class="bg-white rounded-lg shadow-2xl overflow-hidden hover:shadow-xl transition-shadow duration-300"
+        >
+          <!-- Exibição da Imagem -->
+          <% if (item.fotos && item.fotos.length > 0) { %>
+          <img
+            src="data:<%= item.fotos[0].contentType %>;base64,<%= item.fotos[0].data.toString('base64') %>"
+            alt="<%= item.nome %>"
+            class="w-11/12 rounded-lg shadow-md mt-8 place-self-center h-48 object-cover"
+          />
+          <% } else { %>
+          <div
+            class="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-500"
+          >
+            Sem imagem
+          </div>
+          <% } %>
+
+          <!-- Informações do Item -->
+          <div class="p-4">
+            <h2 class="text-xl font-bold text-gray-800 mb-2">
+              <%= item.nome %>
+            </h2>
+            <p class="text-sm text-gray-600">
+              <strong>Categoria:</strong> <%= item.categoria %>
+            </p>
+            <p class="text-sm text-gray-600">
+              <strong>Localização:</strong> <%= item.localizacao %>
+            </p>
+            <p class="text-sm text-gray-500 truncate">
+              <strong>Descrição:</strong> <%= item.descricao %>
+            </p>
+            <div class="flex">
+              <a
+                href="/item/<%= item._id %>"
+                class="mt-4 inline-block bg-blue-500 text-white text-center px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-300"
+              >
+                Ver Detalhes
+              </a>
+            </div>
+          </div>
+        </li>
+        <% }); %>
+      </ul>
+    </section>
+  </body>
+</html>
