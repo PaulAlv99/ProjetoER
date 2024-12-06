@@ -133,6 +133,28 @@ app.get("/admin/dashboard", (req, res) => {
   res.render("dashboardAdmin");
 });
 
+app.get("/item/:id", autenticarToken, async (req, res) => {
+  try {
+    const itemId = req.params.id;
+
+    // Simulação de busca do item no banco de dados
+    const item = await mongoose.model("Item").findById(itemId);
+
+    if (!item) {
+      return res
+        .status(404)
+        .render("erro", { mensagem: "Item não encontrado." });
+    }
+
+    res.render("detalhesItem", { item });
+  } catch (error) {
+    console.error("Erro ao buscar item:", error);
+    res
+      .status(500)
+      .render("erro", { mensagem: "Erro ao buscar os detalhes do item." });
+  }
+});
+
 // Auth rotas
 app.post("/gerarchaves", gerarChavesHandler);
 app.post("/registo", registoUser);
