@@ -58,10 +58,6 @@ app.get("/", autenticarToken, (req, res) => {
   res.render("paginaInicial");
 });
 
-app.get("/CriarAnuncio", autenticarToken, (req, res) =>{
-  res.render("anuncioItensForm");
-} );
-
 app.get("/pesquisa", autenticarToken, (req, res) => {
   res.render("pesquisaForm");
 });
