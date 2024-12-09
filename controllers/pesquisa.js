@@ -4,9 +4,8 @@ const Item = require("../models/Item");
 const pesquisarItens = async (req, res) => {
   try {
     // Extrai os dados do formulário
-    const { nome, localizacao, categoria } = req.body;
-
     console.log(req.body);
+    const { nome, localizacao, categoria } = req.body;
 
     // Construção da query dinâmica com base nos filtros fornecidos
     const query = {};
@@ -17,18 +16,13 @@ const pesquisarItens = async (req, res) => {
     // Consulta ao MongoDB
     const resultados = await Item.find(query);
     console.log(resultados);
-    // Se não houver resultados
-    if (resultados.length === 0) {
-      return res.render("resultadosPesquisa", {
-        error: "Ocorreu um erro ao realizar a pesquisa. Tente novamente.",
-      });
-    }
 
     // Renderiza a página com os resultados encontrados
-    return res.render("resultadosPesquisa", { resultados });
+    return res.render("resultadosPesquisa", { resultados, error: null });
   } catch (error) {
     console.error("Erro ao realizar a pesquisa:", error);
     return res.render("resultadosPesquisa", {
+      resultados: [],
       error: "Ocorreu um erro ao realizar a pesquisa. Tente novamente.",
     });
   }

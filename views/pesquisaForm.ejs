@@ -64,7 +64,7 @@
           <span class="block sm:inline"><%= error %></span>
         </div>
         <% } %>
-        <form action="/pesquisa" method="POST" enctype="multipart/form-data">
+        <form action="/pesquisa" method="post">
           <p class="mt-1 text-sm/6 text-gray-600">
             Faca a pesquisa dos itens que quer trocar ou visualizar , pode fazer
             essa pesquisa por <strong>Localidade</strong> e tambem pode fazelo
@@ -110,6 +110,7 @@
                     <option value="" selected disabled>
                       Escolha uma localização
                     </option>
+                    <option value=""></option>
                     <option value="aveiro">Aveiro</option>
                     <option value="beja">Beja</option>
                     <option value="braga">Braga</option>
@@ -148,8 +149,9 @@
                     id="categoria"
                   >
                     <option value="" selected disabled>
-                      Escolha uma localização
+                      Escolha uma categoria
                     </option>
+                    <option value=""></option>
                     <option value="eletrodomesticos">Eletrodomésticos</option>
                     <option value="roupas">Roupa</option>
                     <option value="moveis">Móveis e Decoração</option>
@@ -185,12 +187,15 @@
             </div>
           </section>
           <div class="mt-6 flex items-center justify-end gap-x-6">
+            <a>
             <button
               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
               type="submit"
+              formMethod="POST"
             >
               Pesquisar
             </button>
+            </a>
           </div>
         </form>
       </div>
