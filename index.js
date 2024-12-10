@@ -5,7 +5,7 @@ const path = require("path");
 const crypto = require("crypto");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
-
+require('dotenv').config();
 const {
   registoUser,
   loginUser,
@@ -31,7 +31,7 @@ const port = 3000;
 // Connect to MongoDB
 mongoose
   .connect(
-    "mongodb+srv://admin:n2ubVfjcPyyhyFxd@cluster0.pd2lc.mongodb.net/ProjetoER?retryWrites=true&w=majority&appName=Cluster0",
+    process.env.MONGODB_URL,
     {}
   )
   .then(() => {
@@ -181,9 +181,9 @@ const httpsServer = https.createServer(
   },
   app
 );
-httpsServer.listen(3000, () => {
-  console.log("HTTPS server up and running on port 3000");
-});
-// app.listen(port,"192.168.1.14",() => {
-//   console.log(`Server running on port ${port}`);
+// httpsServer.listen(3000, () => {
+//   console.log("HTTPS server up and running on port 3000");
 // });
+app.listen(port,"localhost",() => {
+  console.log(`Server running on port ${port}`);
+});

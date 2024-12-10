@@ -178,7 +178,7 @@ const registoUser = async (req, res) => {
 
       try {
         console.log(req.body);
-        const { pseudonimo, age } = req.body;
+        const { age } = req.body;
 
         if (!req.files || !req.files.docIdentificacao || !req.files.publicKey) {
           return res.render("registoForm", {
@@ -192,13 +192,6 @@ const registoUser = async (req, res) => {
           .createHash("sha256")
           .update(idImageBuffer)
           .digest("hex");
-
-        const existingUser = await User.findOne({ pseudonimo });
-        if (existingUser) {
-          return res.render("registoForm", {
-            error: "Pseudónimo já existe, tente outro",
-          });
-        }
 
         const existingKey = await User.findOne({ publicKey: publicKeyContent });
         if (existingKey) {
@@ -221,7 +214,18 @@ const registoUser = async (req, res) => {
             error: "Tem de ter pelo menos 18 anos",
           });
         }
-
+        //gerar Pseudonimo
+        pseudonimo = crypto.randomBytes(16).toString("hex");
+        const existingUser = await User.findOne({ pseudonimo });
+        if (existingUser) {
+          while(true){
+            pseudonimo = crypto.randomBytes(16).toString("hex");
+            const existingUser = await User.findOne({ pseudonimo });
+            if (!existingUser) {
+              break;
+            }
+          }
+        }
         const user = new User({
           pseudonimo,
           age,
@@ -234,7 +238,10 @@ const registoUser = async (req, res) => {
         });
 
         await user.save();
-        return res.redirect("/login");
+        return res.render("registoForm", {
+          success: "Registo efetuado com sucesso!",
+          pseudonimo: user.pseudonimo,
+        });
       } catch (error) {
         console.error("Erro de registo:", error);
         return res.render("registoForm", {
