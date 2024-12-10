@@ -6,6 +6,8 @@ const crypto = require("crypto");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 require('dotenv').config();
+const { SECURE_STORAGE_PATH, getFullPath } = require('./controllers/anuncio');
+
 const {
   registoUser,
   loginUser,
@@ -45,6 +47,7 @@ mongoose
 
 app.set("view engine", "ejs");
 app.use(express.static("src/public"));
+app.use('/secure_uploads', express.static("secure_uploads"));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.json());
@@ -153,6 +156,42 @@ app.get("/item/:id", autenticarToken, async (req, res) => {
     res
       .status(500)
       .render("erro", { mensagem: "Erro ao buscar os detalhes do item." });
+  }
+});
+// Secure file serving endpoint
+app.get('/file/:filepath(*)', autenticarToken, async (req, res) => {
+  try {
+    // Sanitize and validate filepath
+    const requestedPath = req.params.filepath;
+    const normalizedPath = path.normalize(requestedPath).replace(/^(\.\.[\/\\])+/, '');
+    const fullPath = getFullPath(normalizedPath);
+
+    // Verify file exists
+    try {
+      await fs.access(fullPath);
+    } catch {
+      return res.status(404).send('Arquivo não encontrado');
+    }
+
+    // Verify file is within secure storage
+    const relativePath = path.relative(SECURE_STORAGE_PATH, fullPath);
+    if (relativePath.startsWith('..') || path.isAbsolute(relativePath)) {
+      return res.status(403).send('Acesso negado');
+    }
+
+    // Set security headers
+    res.set({
+      'Content-Security-Policy': "default-src 'self'",
+      'X-Content-Type-Options': 'nosniff',
+      'Cache-Control': 'private, no-cache, no-store, must-revalidate'
+    });
+
+    // Stream file
+    res.sendFile(fullPath);
+
+  } catch (error) {
+    console.error('Erro ao servir arquivo:', error);
+    res.status(500).send('Erro interno do servidor');
   }
 });
 
