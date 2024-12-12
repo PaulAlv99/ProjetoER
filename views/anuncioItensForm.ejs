@@ -40,8 +40,7 @@
             class="dropdown-content menu menu-sm z-[1] mt-3 w-52 bg-base-100 p-2 shadow rounded-box"
           >
             <li><a href="/perfil">Perfil</a></li>
-            <li><a>Exemplo 2</a></li>
-            <li><a>Exemplo 3</a></li>
+            <li><a href="/sair">Sair</a></li>
           </ul>
         </div>
       </div>
@@ -71,9 +70,9 @@
         </div>
         <% } %>
         <form action="/anuncio" method="POST" enctype="multipart/form-data">
-          <p class="mt-1 text-sm/6 text-gray-600">
-            Tem a possibilidade de doar um item que ja nao de uso ou utilize ,
-            contribua para uma sociedae
+          <p class="text-1xl font-semibold mt-1 text-sm/6 text-gray-600">
+            Tem a possibilidade de doar um item que ja não utilize,
+            contribua para uma sociedade mais sustentável.
           </p>
 
           <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -161,7 +160,7 @@
               <!-- Contêiner de pré-visualização -->
             </div>
           </div>
-          <div class="flex items-stretch">
+          <div class="mt-5 flex items-stretch">
             <div class="w-full px-2">
               <label
                 for="peso"
@@ -266,20 +265,21 @@
               </div>
             </div>
           </div>
-
-          <div class="mt-6 flex items-center justify-end gap-x-6">
+          <div class="mt-5 gap-x-10 grid grid-cols-2 justify-center">
             <button
-              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded focus:outline-none focus:shadow-outline w-full h-10"
               type="submit"
             >
               Publicar
             </button>
-            <a
-              class="bg-white px-56 hover:bg-slate-100 text-black font-bold py-2 rounded focus:outline-none focus:shadow-outline"
-              href="/"
+            <button type="button" class="bg-zinc-400 hover:bg-zinc-600 text-white font-bold  rounded focus:outline-none focus:shadow-outline w-full h-10"
             >
-              Cancelar
+            <a href="/">
+            Cancelar
             </a>
+            </button>
+          </button>
+          </div>
           </div>
         </form>
       </div>

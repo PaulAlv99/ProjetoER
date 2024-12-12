@@ -3,7 +3,11 @@
   <head>
     <title>Pesquisar</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.11.1/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.11.1/dist/full.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
     <link rel="manifest" href="manifest.json" />
   </head>
   <body class="min-h-screen bg-gradient-to-b from-blue-100 to-blue-200">
@@ -11,16 +15,31 @@
     <div class="navbar bg-base-100">
       <div class="flex-1">
         <img src="/logotipoER.png" alt="Logo" class="h-10 w-auto mr-2" />
-        <a href="/" class="btn btn-ghost text-xl">Pereiro - Plataforma de reutilização</a>
+        <a href="/" class="btn btn-ghost text-xl"
+          >Pereiro - Plataforma de reutilização</a
+        >
       </div>
       <div class="flex-none">
         <div class="dropdown dropdown-end">
           <button tabindex="0" class="btn btn-square btn-ghost">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-5 w-5 stroke-current">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              class="inline-block h-5 w-5 stroke-current"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
+              ></path>
             </svg>
           </button>
-          <ul tabindex="0" class="dropdown-content menu menu-sm z-[1] mt-3 w-52 bg-base-100 p-2 shadow rounded-box">
+          <ul
+            tabindex="0"
+            class="dropdown-content menu menu-sm z-[1] mt-3 w-52 bg-base-100 p-2 shadow rounded-box"
+          >
             <li><a href="/perfil">Perfil</a></li>
             <li><a href="/pesquisa">Pesquisa</a></li>
             <li><a href="/sair">Sair</a></li>
@@ -40,7 +59,10 @@
 
     <!-- Error Message -->
     <% if (locals.error) { %>
-    <div class="mb-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+    <div
+      class="mb-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+      role="alert"
+    >
       <span class="block sm:inline"><%= error %></span>
     </div>
     <% } %>
@@ -53,55 +75,97 @@
 
       <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mx-3">
         <% resultados.forEach((item) => { %>
-        <li class="pt-5 pr-5 pl-5 bg-white rounded-lg shadow-2xl overflow-hidden hover:shadow-xl transition-shadow duration-300 group">
+        <li
+          class="pt-5 pr-5 pl-5 bg-white rounded-lg shadow-2xl overflow-hidden hover:shadow-xl transition-shadow duration-300 group"
+        >
           <!-- Image Carousel -->
           <div class="relative">
-            <div class="w-full h-48 relative overflow-hidden" id="carousel-<%= item._id %>">
-              <% if (item.fotos && item.fotos.length > 0) { %>
-                <% item.fotos.forEach((foto, index) => { %>
-                  <img
-                  src="/secure_uploads/<%= encodeURIComponent(foto.path) %>"
-                    alt="<%= item.nome %> - Foto <%= index + 1 %>"
-                    class="w-full h-48 rounded-lg shadow-md object-cover absolute transition-opacity duration-300 <%= index === 0 ? 'opacity-100' : 'opacity-0' %>"
-                    data-index="<%= index %>"
-                    onerror="this.onerror=null; this.src='./src/public/semImagem.png';"
+            <div
+              class="w-full h-48 relative overflow-hidden"
+              id="carousel-<%= item._id %>"
+            >
+              <% if (item.fotos && item.fotos.length > 0) { %> <%
+              item.fotos.forEach((foto, index) => { %>
+              <img
+                src="/secure_uploads/<%= encodeURIComponent(foto.path) %>"
+                alt="<%= item.nome %> - Foto <%= index + 1 %>"
+                class="w-full h-48 rounded-lg shadow-md object-cover absolute transition-opacity duration-300 <%= index === 0 ? 'opacity-100' : 'opacity-0' %>"
+                data-index="<%= index %>"
+                onerror="this.onerror=null; this.src='./src/public/semImagem.png';"
+              />
+              <% }); %>
+
+              <!-- Navigation Buttons -->
+              <% if (item.fotos.length > 1) { %>
+              <button
+                onclick="prevImage('<%= item._id %>')"
+                class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/75 text-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity z-10"
+                aria-label="Previous image"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 19l-7-7 7-7"
                   />
-                <% }); %>
+                </svg>
+              </button>
 
-                <!-- Navigation Buttons -->
-                <% if (item.fotos.length > 1) { %>
-                  <button 
-                    onclick="prevImage('<%= item._id %>')" 
-                    class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/75 text-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity z-10"
-                    aria-label="Previous image"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                    </svg>
-                  </button>
-                  
-                  <button 
-                    onclick="nextImage('<%= item._id %>')" 
-                    class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/75 text-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity z-10"
-                    aria-label="Next image"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                  </button>
+              <button
+                onclick="nextImage('<%= item._id %>')"
+                class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/75 text-white rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity z-10"
+                aria-label="Next image"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </button>
 
-                  <!-- Image Counter -->
-                  <div class="absolute bottom-2 right-2 bg-black/50 text-white px-2 py-1 rounded-full text-sm z-10">
-                    <span id="counter-<%= item._id %>">1</span>/<%= item.fotos.length %>
-                  </div>
-                <% } %>
-              <% } else { %>
-                <div class="w-full h-48 bg-gray-100 flex flex-col items-center justify-center text-gray-400">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  <span>Sem imagem</span>
-                </div>
+              <!-- Image Counter -->
+              <div
+                class="absolute bottom-2 right-2 bg-black/50 text-white px-2 py-1 rounded-full text-sm z-10"
+              >
+                <span id="counter-<%= item._id %>">1</span>/<%=
+                item.fotos.length %>
+              </div>
+              <% } %> <% } else { %>
+              <div
+                class="w-full h-48 bg-gray-100 flex flex-col items-center justify-center text-gray-400"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-12 w-12 mb-2"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  />
+                </svg>
+                <span>Sem imagem</span>
+              </div>
               <% } %>
             </div>
           </div>
@@ -120,7 +184,7 @@
             <p class="text-sm text-gray-500 truncate">
               <strong>Descrição:</strong> <%= item.descricao %>
             </p>
-            <div class="flex">
+            <div class="grid grid-cols-1 justfy-center">
               <a
                 href="/item/<%= item._id %>"
                 class="mt-4 inline-block bg-blue-500 text-white text-center px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-300"
@@ -138,13 +202,13 @@
     <script>
       function nextImage(itemId) {
         const carousel = document.getElementById(`carousel-${itemId}`);
-        const images = carousel.getElementsByTagName('img');
+        const images = carousel.getElementsByTagName("img");
         const counter = document.getElementById(`counter-${itemId}`);
         let currentIndex = -1;
 
         // Find current visible image
         for (let i = 0; i < images.length; i++) {
-          if (images[i].classList.contains('opacity-100')) {
+          if (images[i].classList.contains("opacity-100")) {
             currentIndex = i;
             break;
           }
@@ -152,14 +216,14 @@
 
         // Hide current image
         if (currentIndex !== -1) {
-          images[currentIndex].classList.remove('opacity-100');
-          images[currentIndex].classList.add('opacity-0');
+          images[currentIndex].classList.remove("opacity-100");
+          images[currentIndex].classList.add("opacity-0");
         }
 
         // Show next image
         const nextIndex = (currentIndex + 1) % images.length;
-        images[nextIndex].classList.remove('opacity-0');
-        images[nextIndex].classList.add('opacity-100');
+        images[nextIndex].classList.remove("opacity-0");
+        images[nextIndex].classList.add("opacity-100");
 
         // Update counter
         counter.textContent = nextIndex + 1;
@@ -167,13 +231,13 @@
 
       function prevImage(itemId) {
         const carousel = document.getElementById(`carousel-${itemId}`);
-        const images = carousel.getElementsByTagName('img');
+        const images = carousel.getElementsByTagName("img");
         const counter = document.getElementById(`counter-${itemId}`);
         let currentIndex = -1;
 
         // Find current visible image
         for (let i = 0; i < images.length; i++) {
-          if (images[i].classList.contains('opacity-100')) {
+          if (images[i].classList.contains("opacity-100")) {
             currentIndex = i;
             break;
           }
@@ -181,14 +245,15 @@
 
         // Hide current image
         if (currentIndex !== -1) {
-          images[currentIndex].classList.remove('opacity-100');
-          images[currentIndex].classList.add('opacity-0');
+          images[currentIndex].classList.remove("opacity-100");
+          images[currentIndex].classList.add("opacity-0");
         }
 
         // Show previous image
-        const prevIndex = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
-        images[prevIndex].classList.remove('opacity-0');
-        images[prevIndex].classList.add('opacity-100');
+        const prevIndex =
+          currentIndex === 0 ? images.length - 1 : currentIndex - 1;
+        images[prevIndex].classList.remove("opacity-0");
+        images[prevIndex].classList.add("opacity-100");
 
         // Update counter
         counter.textContent = prevIndex + 1;
