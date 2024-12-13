@@ -68,16 +68,20 @@
     <!-- Search Results -->
     <section id="pesquisaItens" class="py-8 bg-white dark:text-black">
       <p class="mt-1 mx-6 text-sm/6 text-gray-600">
-        Aqui estão os resultados da pesquisa <% if (nome || localizacao ||
-        categoria) { %> para
+        Aqui estão os resultados da pesquisa <% if (locals.nome ||
+        locals.localizacao || locals.categoria) { %>
         <strong>
-          <% if (nome) { %> Nome: <strong>"<%= nome %>"</strong> <% } %> <% if
-          (localizacao) { %> <% if (nome) { %>, <% } %> Localização:
-          <strong>"<%= localizacao %>"</strong> <% } %> <% if (categoria) { %>
-          <% if (nome || localizacao) { %>, <% } %> Categoria:
-          <strong>"<%= categoria %>"</strong>
-          <% } %> </strong
-        >. <% } else { %> sem filtros específicos. <% } %>
+          <% if (locals.nome) { %> Nome: <strong><%= locals.nome %></strong> <%
+          if (locals.localizacao || locals.categoria) { %>, <% } %> <% } %> <%
+          if (locals.localizacao) { %> Localização:
+          <strong><%= locals.localizacao %></strong><% if (locals.categoria) {
+          %>, <% } %> <% } %> <% if (locals.categoria) { %> Categoria:
+          <strong><%= locals.categoria %></strong>
+          <% } %>
+        </strong>
+        <% } else { %>
+        <strong>sem filtros específicos.</strong>
+        <% } %>
       </p>
 
       <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mx-3">
