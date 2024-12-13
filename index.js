@@ -5,8 +5,8 @@ const path = require("path");
 const crypto = require("crypto");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
-require('dotenv').config();
-const { SECURE_STORAGE_PATH, getFullPath } = require('./controllers/anuncio');
+require("dotenv").config();
+const { SECURE_STORAGE_PATH, getFullPath } = require("./controllers/anuncio");
 
 const {
   registoUser,
@@ -32,10 +32,7 @@ const port = 3000;
 
 // Connect to MongoDB
 mongoose
-  .connect(
-    process.env.MONGODB_URL,
-    {}
-  )
+  .connect(process.env.MONGODB_URL, {})
   .then(() => {
     console.log("Connected to MongoDB");
   })
@@ -47,7 +44,7 @@ mongoose
 
 app.set("view engine", "ejs");
 app.use(express.static("src/public"));
-app.use('/secure_uploads', express.static("secure_uploads"));
+app.use("/secure_uploads", express.static("secure_uploads"));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.json());
@@ -159,39 +156,40 @@ app.get("/item/:id", autenticarToken, async (req, res) => {
   }
 });
 // Secure file serving endpoint
-app.get('/file/:filepath(*)', autenticarToken, async (req, res) => {
+app.get("/file/:filepath(*)", autenticarToken, async (req, res) => {
   try {
     // Sanitize and validate filepath
     const requestedPath = req.params.filepath;
-    const normalizedPath = path.normalize(requestedPath).replace(/^(\.\.[\/\\])+/, '');
+    const normalizedPath = path
+      .normalize(requestedPath)
+      .replace(/^(\.\.[\/\\])+/, "");
     const fullPath = getFullPath(normalizedPath);
 
     // Verify file exists
     try {
       await fs.access(fullPath);
     } catch {
-      return res.status(404).send('Arquivo não encontrado');
+      return res.status(404).send("Arquivo não encontrado");
     }
 
     // Verify file is within secure storage
     const relativePath = path.relative(SECURE_STORAGE_PATH, fullPath);
-    if (relativePath.startsWith('..') || path.isAbsolute(relativePath)) {
-      return res.status(403).send('Acesso negado');
+    if (relativePath.startsWith("..") || path.isAbsolute(relativePath)) {
+      return res.status(403).send("Acesso negado");
     }
 
     // Set security headers
     res.set({
-      'Content-Security-Policy': "default-src 'self'",
-      'X-Content-Type-Options': 'nosniff',
-      'Cache-Control': 'private, no-cache, no-store, must-revalidate'
+      "Content-Security-Policy": "default-src 'self'",
+      "X-Content-Type-Options": "nosniff",
+      "Cache-Control": "private, no-cache, no-store, must-revalidate",
     });
 
     // Stream file
     res.sendFile(fullPath);
-
   } catch (error) {
-    console.error('Erro ao servir arquivo:', error);
-    res.status(500).send('Erro interno do servidor');
+    console.error("Erro ao servir arquivo:", error);
+    res.status(500).send("Erro interno do servidor");
   }
 });
 
@@ -223,6 +221,6 @@ const httpsServer = https.createServer(
 // httpsServer.listen(3000, () => {
 //   console.log("HTTPS server up and running on port 3000");
 // });
-app.listen(port,"localhost",() => {
+app.listen(port, "localhost", () => {
   console.log(`Server running on port ${port}`);
 });

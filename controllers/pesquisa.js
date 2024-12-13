@@ -18,7 +18,16 @@ const pesquisarItens = async (req, res) => {
     console.log(resultados);
 
     // Renderiza a página com os resultados encontrados
-    return res.render("resultadosPesquisa", { resultados, error: null });
+    const localizacaoFormatada = localizacao ? localidades[localizacao] : null;
+    const categoriaFormatada = categoria ? categorias[categoria] : null;
+
+    return res.render("resultadosPesquisa", {
+      resultados,
+      nome,
+      localizacao: localizacaoFormatada,
+      categoria: categoriaFormatada,
+      error: null,
+    });
   } catch (error) {
     console.error("Erro ao realizar a pesquisa:", error);
     return res.render("resultadosPesquisa", {
