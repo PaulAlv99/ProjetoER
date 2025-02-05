@@ -19,11 +19,11 @@ RF20 - The system must allow locations to view transactions that will take place
 
 ### Made with | Ferramentas
 
-NPM
-EJS
-HTML
-CSS
-JS
-JWT TOKENS
-TAILWIND
-DAISYUI
+NPM \
+EJS \
+HTML \
+CSS \
+JS \
+JWT TOKENS \
+TAILWIND \
+DAISYUI \
