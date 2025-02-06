@@ -29,5 +29,5 @@ TAILWIND \
 DAISYUI
 
 ### Must setup a .env file with | Deve criar um ficheiro .env com o seguinte
-MONGODB_URL=XXXX
+MONGODB_URL=XXXX \
 UPLOAD_DIR=XXXX
